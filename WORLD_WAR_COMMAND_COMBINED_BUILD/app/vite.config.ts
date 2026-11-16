@@ -170,7 +170,10 @@ export default defineConfig(({ command, isPreview }) => ({
     ...(command === "build" || isPreview
       ? [
           nitro({
-            preset: process.env.DEPLOY_TARGET === "cloudflare" ? "cloudflare_module" : "vercel",
+            // NITRO_PRESET overrides the default so Render can use node-server
+            // without breaking Vercel (default) or Cloudflare (DEPLOY_TARGET).
+            preset: process.env.NITRO_PRESET
+              || (process.env.DEPLOY_TARGET === "cloudflare" ? "cloudflare_module" : "vercel"),
             // Auto-registers server/middleware/* (the PWA install page +
             // manifest + head-tag middleware). Nitro v3 defaults serverDir to
             // false, so removing this silently unwires /?install=1 on deploys.

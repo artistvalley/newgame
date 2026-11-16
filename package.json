@@ -1,0 +1,9 @@
+{
+  "name": "newgame",
+  "private": true,
+  "description": "Repo-root entrypoint for Render. The app lives in WORLD_WAR_COMMAND_COMBINED_BUILD/app.",
+  "scripts": {
+    "build": "npm ci --prefix WORLD_WAR_COMMAND_COMBINED_BUILD/app && npm run build:render --prefix WORLD_WAR_COMMAND_COMBINED_BUILD/app",
+    "start": "npm start --prefix WORLD_WAR_COMMAND_COMBINED_BUILD/app"
+  }
+}
