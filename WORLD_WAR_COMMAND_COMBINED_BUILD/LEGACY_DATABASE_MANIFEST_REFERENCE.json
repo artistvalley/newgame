@@ -1,0 +1,221 @@
+{
+  "provider": "PlanetScale",
+  "database": "wargame",
+  "branch": "main",
+  "engine": "18.7 (Debian 18.7-1.pgdg12+2)",
+  "exportedAt": "2026-11-16T12:42:36.039Z",
+  "readOnly": true,
+  "migrations": [
+    "0001_auth.sql",
+    "0002_world.sql",
+    "0003_account_security.sql",
+    "0004_economy.sql",
+    "0005_world_management.sql",
+    "0006_research.sql",
+    "0007_military.sql",
+    "0008_diplomacy.sql",
+    "0009_arena.sql",
+    "0010_admin_audit.sql",
+    "0011_admin_controls.sql"
+  ],
+  "tables": [
+    {
+      "table": "_migrations",
+      "rows": 11
+    },
+    {
+      "table": "account",
+      "rows": 5
+    },
+    {
+      "table": "admin_account",
+      "rows": 0
+    },
+    {
+      "table": "admin_audit",
+      "rows": 11
+    },
+    {
+      "table": "admin_recovery",
+      "rows": 0
+    },
+    {
+      "table": "agreements",
+      "rows": 0
+    },
+    {
+      "table": "arena_queue",
+      "rows": 0
+    },
+    {
+      "table": "arena_sessions",
+      "rows": 1
+    },
+    {
+      "table": "auth_codes",
+      "rows": 0
+    },
+    {
+      "table": "auth_rate_limits",
+      "rows": 0
+    },
+    {
+      "table": "battle_reports",
+      "rows": 0
+    },
+    {
+      "table": "countries",
+      "rows": 5
+    },
+    {
+      "table": "country_budget",
+      "rows": 5
+    },
+    {
+      "table": "country_relations",
+      "rows": 0
+    },
+    {
+      "table": "country_research",
+      "rows": 0
+    },
+    {
+      "table": "country_reserve",
+      "rows": 5
+    },
+    {
+      "table": "country_stocks",
+      "rows": 35
+    },
+    {
+      "table": "country_territories",
+      "rows": 15
+    },
+    {
+      "table": "country_tick_ledger",
+      "rows": 5
+    },
+    {
+      "table": "diplomatic_messages",
+      "rows": 1
+    },
+    {
+      "table": "friendships",
+      "rows": 0
+    },
+    {
+      "table": "game_actions",
+      "rows": 12
+    },
+    {
+      "table": "invention_events",
+      "rows": 0
+    },
+    {
+      "table": "inventions",
+      "rows": 0
+    },
+    {
+      "table": "ledger_entries",
+      "rows": 81
+    },
+    {
+      "table": "military_units",
+      "rows": 0
+    },
+    {
+      "table": "national_priorities",
+      "rows": 15
+    },
+    {
+      "table": "player_bans",
+      "rows": 1
+    },
+    {
+      "table": "research_catalog",
+      "rows": 4
+    },
+    {
+      "table": "session",
+      "rows": 4
+    },
+    {
+      "table": "session_invites",
+      "rows": 1
+    },
+    {
+      "table": "session_members",
+      "rows": 1
+    },
+    {
+      "table": "session_replays",
+      "rows": 0
+    },
+    {
+      "table": "territories",
+      "rows": 196
+    },
+    {
+      "table": "user",
+      "rows": 5
+    },
+    {
+      "table": "verification",
+      "rows": 2
+    },
+    {
+      "table": "wars",
+      "rows": 0
+    },
+    {
+      "table": "world_clock",
+      "rows": 1
+    }
+  ],
+  "functions": [
+    "wwc_advance_invention",
+    "wwc_advance_research",
+    "wwc_annex_territory",
+    "wwc_answer_session_invite",
+    "wwc_apply_country_tick",
+    "wwc_attack",
+    "wwc_attack_options",
+    "wwc_battle_strength",
+    "wwc_block_banned_session",
+    "wwc_cap_stock",
+    "wwc_capture_allowed",
+    "wwc_claim_tick",
+    "wwc_create_session",
+    "wwc_declare_war",
+    "wwc_end_agreement",
+    "wwc_end_session",
+    "wwc_expire_agreements",
+    "wwc_expire_country",
+    "wwc_finish_tick",
+    "wwc_found_country",
+    "wwc_friend_answer",
+    "wwc_friend_end",
+    "wwc_friend_request",
+    "wwc_in_session",
+    "wwc_init_economy",
+    "wwc_invite_to_session",
+    "wwc_join_queue",
+    "wwc_leave_queue",
+    "wwc_leave_session",
+    "wwc_move_capital",
+    "wwc_propose_agreement",
+    "wwc_propose_invention",
+    "wwc_recruit_unit",
+    "wwc_release_territory",
+    "wwc_respond_agreement",
+    "wwc_save_budget",
+    "wwc_send_message",
+    "wwc_set_priorities",
+    "wwc_set_relation",
+    "wwc_snapshot_session",
+    "wwc_station_unit",
+    "wwc_supplied_fighters",
+    "wwc_war_offer"
+  ],
+  "note": "This is the live old game database. It is not the Milestone 2F schema."
+}

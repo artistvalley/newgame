@@ -1,0 +1,12 @@
+# Set these securely in your hosting provider. Never commit actual credentials.
+DATABASE_URL=postgresql://USER:PASSWORD@HOST:5432/wwc_2f?sslmode=require
+BETTER_AUTH_URL=https://YOUR-NEW-DOMAIN.example
+BETTER_AUTH_SECRET=REPLACE_WITH_SECURE_RANDOM_32_PLUS_BYTES
+VITE_AUTH_ENABLED=true
+# Optional Grok federation requires its own authorized credentials.
+# GROK_AUTH_ISSUER=
+# GROK_AUTH_CLIENT_ID=
+# GROK_AUTH_CLIENT_SECRET=
+# Mail verification and password reset require a real provider integration.
+# Research bonuses, purchases and external AI must remain disabled until approved.
+RESEARCH_PRODUCTION_BONUSES_ENABLED=false

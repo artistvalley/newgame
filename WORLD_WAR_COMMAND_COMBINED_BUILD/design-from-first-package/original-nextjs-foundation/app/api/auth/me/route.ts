@@ -1,0 +1,1 @@
+import {getCurrentUser} from '@/lib/auth';import {json} from '@/lib/http';export async function GET(){const u=await getCurrentUser();return json({user:u?{id:u.id,email:u.email,displayName:u.displayName,role:u.role,country:u.country?{id:u.country.id,name:u.country.name,flagPrimary:u.country.flagPrimary,flagSymbol:u.country.flagSymbol}:null}:null})}

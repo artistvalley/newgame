@@ -1,0 +1,111 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+      radial-gradient(1200px 500px at 10% -10%, rgba(67, 199, 237, 0.12), transparent 50%),
+      #061326;
+    color: #f3f6fb;
+    font-family: "DM Sans", system-ui, sans-serif;
+  }
+}
+
+@utility font-display {
+  font-family: "Manrope", "DM Sans", sans-serif;
+  letter-spacing: 0.02em;
+}
+
+@utility kicker {
+  color: #f5c85b;
+  font-family: "Barlow Condensed", sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+}
+
+@utility panel {
+  background: rgba(12, 35, 65, 0.96);
+  border: 1px solid #1b3b60;
+  border-radius: 18px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+@utility field {
+  margin-top: 0.25rem;
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid #29496b;
+  background: #07182c;
+  color: #f3f6fb;
+  padding: 0.65rem 0.75rem;
+}
+
+@utility btn {
+  border-radius: 999px;
+  background: #153b5b;
+  color: #f3f6fb;
+  padding: 0.7rem 1rem;
+  font-family: "Barlow Condensed", sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@utility tab {
+  border-radius: 999px;
+  border: 1px solid #29496b;
+  background: transparent;
+  color: #f3f6fb;
+  padding: 0.45rem 0.7rem;
+  font-family: "Barlow Condensed", sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+@utility tab-on {
+  background: #f5c85b;
+  color: #17233a;
+  border-color: #f5c85b;
+}
+
+.tab.on {
+  background: #f5c85b;
+  color: #17233a;
+  border-color: #f5c85b;
+}
+
+.mobile-bottom {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  gap: 0.35rem;
+  overflow-x: auto;
+  padding: 0.6rem 0.6rem calc(0.6rem + env(safe-area-inset-bottom));
+  background: rgba(14, 12, 10, 0.94);
+  border-top: 1px solid #1b3b60;
+}
+
+button:disabled {
+  opacity: 0.45;
+}
+
+/* First-package visual identity applied to the 2F gameplay application. */
+:root { color-scheme: dark; --wwc-bg:#061326; --wwc-panel:#0c2341; --wwc-border:#1b3b60; --wwc-gold:#f5c85b; }
+body { background: radial-gradient(ellipse at 75% -10%,#173a62 0,transparent 43%),#061326; }
+.panel { background:linear-gradient(145deg,#102a49,#0a1c33);border-color:#284767; }
+.btn { background:linear-gradient(135deg,#ffdf82,#e9ae31);color:#17233a;font-weight:800; }
+.tab.on { background:#f5c85b;color:#17233a;border-color:#f5c85b; }
+.kicker {color:#f5c85b;}
+.mobile-bottom {background:#081a30f5;border-top:1px solid #294565;backdrop-filter:blur(15px);}
+.mobile-bottom .tab.on {color:#17233a;}
+:focus-visible {outline:2px solid #43c7ed;outline-offset:2px;}
+@media (max-width:650px){body{font-size:14px}.panel{border-radius:14px}.mobile-bottom{padding-bottom:max(9px,env(safe-area-inset-bottom));}}

@@ -1,0 +1,139 @@
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "postgresql" url = env("DATABASE_URL") }
+
+enum UserRole { PLAYER MODERATOR ADMIN }
+enum UserStatus { ACTIVE SUSPENDED PENDING }
+enum VerificationPurpose { REGISTER LOGIN PASSWORD_RESET }
+enum GovernmentType { DEMOCRACY REPUBLIC MONARCHY FEDERATION AUTHORITARIAN COUNCIL }
+enum TerritoryStatus { AVAILABLE CLAIMED BLOCKED OCEAN }
+enum ActionType { PRIORITY INVESTMENT RESEARCH DIPLOMACY TRADE MILITARY MESSAGE }
+enum TreatyStatus { PROPOSED ACTIVE REJECTED EXPIRED }
+
+model User {
+ id String @id @default(cuid())
+ email String @unique
+ displayName String
+ passwordHash String?
+ role UserRole @default(PLAYER)
+ status UserStatus @default(PENDING)
+ emailVerifiedAt DateTime?
+ createdAt DateTime @default(now())
+ updatedAt DateTime @updatedAt
+ session Session[]
+ verificationCode VerificationCode[]
+ country Country?
+ actions GameAction[]
+ messages Message[]
+ @@index([createdAt])
+}
+model VerificationCode {
+ id String @id @default(cuid())
+ userId String
+ user User @relation(fields:[userId], references:[id], onDelete:Cascade)
+ codeHash String
+ purpose VerificationPurpose
+ expiresAt DateTime
+ consumedAt DateTime?
+ attempts Int @default(0)
+ createdAt DateTime @default(now())
+ @@index([userId,purpose,createdAt])
+}
+model Session {
+ id String @id @default(cuid())
+ userId String
+ user User @relation(fields:[userId], references:[id], onDelete:Cascade)
+ tokenHash String @unique
+ expiresAt DateTime
+ createdAt DateTime @default(now())
+ @@index([userId])
+}
+model Country {
+ id String @id @default(cuid())
+ userId String @unique
+ user User @relation(fields:[userId], references:[id], onDelete:Cascade)
+ name String @unique
+ slug String @unique
+ government GovernmentType
+ flagPrimary String @default("#2563eb")
+ flagSecondary String @default("#facc15")
+ flagSymbol String @default("★")
+ capitalTerritoryId String
+ treasury BigInt @default(1000000)
+ population BigInt @default(100000)
+ stability Int @default(70)
+ economy Int @default(50)
+ technology Int @default(1)
+ createdAt DateTime @default(now())
+ updatedAt DateTime @updatedAt
+ territories CountryTerritory[]
+ priorities NationalPriority[]
+ actions GameAction[]
+ treaties Treaty[] @relation("TreatyInitiator")
+ @@index([name])
+}
+model Territory {
+ id String @id
+ row Int
+ col Int
+ terrain String
+ resources String[]
+ population Int @default(10000)
+ status TerritoryStatus @default(AVAILABLE)
+ countryTerritory CountryTerritory?
+ @@index([row,col])
+ @@index([status])
+}
+model CountryTerritory {
+ id String @id @default(cuid())
+ countryId String
+ territoryId String @unique
+ country Country @relation(fields:[countryId], references:[id], onDelete:Cascade)
+ territory Territory @relation(fields:[territoryId], references:[id], onDelete:Restrict)
+ isCapital Boolean @default(false)
+ @@index([countryId])
+}
+model NationalPriority {
+ id String @id @default(cuid())
+ countryId String
+ country Country @relation(fields:[countryId], references:[id], onDelete:Cascade)
+ key String
+ level Int @default(1)
+ @@unique([countryId,key])
+}
+model GameAction {
+ id String @id @default(cuid())
+ userId String
+ countryId String?
+ user User @relation(fields:[userId], references:[id], onDelete:Cascade)
+ country Country? @relation(fields:[countryId], references:[id], onDelete:SetNull)
+ type ActionType
+ title String
+ details Json
+ createdAt DateTime @default(now())
+ @@index([countryId,createdAt])
+}
+model Treaty {
+ id String @id @default(cuid())
+ initiatorCountryId String
+ initiator Country @relation("TreatyInitiator", fields:[initiatorCountryId], references:[id], onDelete:Cascade)
+ targetCountryId String
+ title String
+ terms Json
+ status TreatyStatus @default(PROPOSED)
+ createdAt DateTime @default(now())
+ @@index([targetCountryId,status])
+}
+model Message {
+ id String @id @default(cuid())
+ senderId String
+ sender User @relation(fields:[senderId], references:[id], onDelete:Cascade)
+ channel String @default("global")
+ body String
+ createdAt DateTime @default(now())
+ @@index([channel,createdAt])
+}
+model GameSetting {
+ key String @id
+ value Json
+ updatedAt DateTime @updatedAt
+}
