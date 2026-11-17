@@ -38,6 +38,7 @@ import { Pool } from "pg";
 import { ensureDbReady, getPglite } from "../db";
 import { cloudflareWorker, hyperdrivePool } from "../hyperdrive.server";
 import { emailAndPasswordEnabled } from "./email-password";
+import { sendAppMail } from "./mail.server";
 import { GATE_PROVIDER_ID, gateIdentitySessions } from "./gate-session.server";
 import { GROK_PROVIDERS } from "./providers";
 import { pgliteDialect } from "./pglite-dialect";
@@ -213,8 +214,36 @@ export const auth = betterAuth({
   // flicker-prevention guidance (gate on `isPending`; SSR the session).
   session: { cookieCache: { enabled: true, maxAge: 300 } },
 
-  // Local email/password — toggled only via `./email-password` (not a plugin).
-  ...(emailAndPasswordEnabled ? { emailAndPassword: { enabled: true } } : {}),
+  // Local email/password — toggled via `./email-password`. Mail hooks live
+  // here so verification/reset can use Gmail SMTP when SMTP_PASS is set.
+  // sendOnSignUp is on, but we do not require a verified inbox before sign-in
+  // (sign-in must still work if mail is not configured).
+  ...(emailAndPasswordEnabled
+    ? {
+        emailVerification: {
+          sendOnSignUp: true,
+          sendVerificationEmail: async ({ user, url }: { user: { email: string }; url: string }) => {
+            await sendAppMail({
+              to: user.email,
+              subject: "Verify your World War Command email",
+              text: `Confirm your commander account:\n${url}\n`,
+              html: `<p>Confirm your commander account:</p><p><a href="${url}">Verify email</a></p>`,
+            });
+          },
+        },
+        emailAndPassword: {
+          enabled: true,
+          sendResetPassword: async ({ user, url }: { user: { email: string }; url: string }) => {
+            await sendAppMail({
+              to: user.email,
+              subject: "Reset your World War Command password",
+              text: `Reset your password:\n${url}\n`,
+              html: `<p>Reset your password:</p><p><a href="${url}">Choose a new password</a></p>`,
+            });
+          },
+        },
+      }
+    : {}),
 
   // `__Host-` prefixed cookies: the browser REFUSES any same-named cookie that
   // carries a `Domain` attribute, so a sibling `*.grok.me` app cannot "toss" a

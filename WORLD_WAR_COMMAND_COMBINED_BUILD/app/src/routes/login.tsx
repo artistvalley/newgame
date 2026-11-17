@@ -1,10 +1,15 @@
 import { useState, type FormEvent } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { GROK_PROVIDERS, authClient, authEnabled, signIn } from "@/lib/auth/client";
+import { getMailConfigured } from "@/lib/auth/mail-status";
 
-export const Route = createFileRoute("/login")({ component: Login });
+export const Route = createFileRoute("/login")({
+  loader: () => getMailConfigured(),
+  component: Login,
+});
 
 function Login() {
+  const { mailConfigured } = Route.useLoaderData();
   const navigate = useNavigate();
   const [mode, setMode] = useState<"in" | "up">("up");
   const [name, setName] = useState("");
@@ -38,7 +43,10 @@ function Login() {
         <h1 className="font-display text-4xl leading-none">Enter the command</h1>
         <p className="text-sm text-[#cbbfa6]">
           This world uses a separate game database. Existing production accounts are not automatically imported.
-          Purchases and external AI stay off. Password reset and verification letters are not sent until a mail provider is connected.
+          Purchases and external AI stay off.
+          {mailConfigured
+            ? " Verification and password-reset letters are sent to the email you use here."
+            : " Password reset and verification letters are not sent until a mail provider is connected."}
         </p>
         {authEnabled ? (
           <>
