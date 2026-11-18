@@ -92,6 +92,55 @@ const COPY = {
     errWallet: "The wallet does not have enough.",
     errRate: "Too many orders. Wait a moment.",
     errAdmin: "Admin role required.",
+    navMap: "Map",
+    navEconomy: "Economy",
+    navResearch: "Research",
+    navMilitary: "Army",
+    navDiplomacy: "Treaties",
+    navHuman: "Losses",
+    navZetos: "ZETOS",
+    welcomeTitle: "Welcome, Commander",
+    welcomeGoal: "Build a country on a shared world map, grow its economy, research, make treaties and defend your land against other players.",
+    step1: "Choose your land: tap “Pick land for me”, or tap up to 6 touching land squares on the map.",
+    step2: "Give your country a name (3 letters or more).",
+    step3: "Tap “Found my country”. You start with 1,000,000 in the treasury and 100,000 people.",
+    pickForMe: "Pick land for me",
+    clearPick: "Clear",
+    capitalLabel: "Capital (your main city)",
+    regionsChosen: "land squares chosen",
+    needLand: "Choose at least one land square first.",
+    needName: "Type a name with at least 3 letters.",
+    foundCta: "Found my country",
+    foundDone: "Your country is founded! Explore the tabs at the bottom.",
+    mapHint: "Tap a square to select it. Swipe to move around the map. Use − / + to zoom.",
+    zoomOut: "Zoom out",
+    zoomIn: "Zoom in",
+    working: "Sending your order…",
+    done: "Done ✓",
+    dismiss: "Close",
+    help: "How to play",
+    nextTitle: "Getting started",
+    next1: "Economy: tap “Confirm budget”, then “Advance one world day” to see your country grow.",
+    next2: "Army: recruit a unit, tap “Aim at a neighbouring region”, then try a free training battle.",
+    next3: "Treaties: send a ceasefire or alliance to another player’s country.",
+    gotIt: "Got it",
+    economyIntro: "Your money, people and supplies. Confirm a budget, then advance a day to see what changes.",
+    researchIntro: "Describe something to research and start it. Up to three projects at a time.",
+    militaryIntro: "Recruit units, choose a target region, then fight. Training battles are free practice and change nothing.",
+    diplomacyIntro: "Make deals with other countries: ceasefires, alliances and more.",
+    humanIntro: "What the wars have cost your people. Rehabilitate to repair damage.",
+    zetosIntro: "ZETOS are play-money credits for testing. No real money is ever charged.",
+    target: "Target",
+    noTarget: "none yet — tap “Aim at a neighbouring region” or pick one on the Map tab",
+    noOthers: "No other countries yet. When other players found countries, you can make treaties with them here.",
+    noProjects: "No research yet.",
+    noReports: "No battles yet.",
+    noBooks: "No treasury history yet. Advance a day to see entries.",
+    noDeals: "No treaties yet.",
+    loadFailed: "Could not load the game. Check your connection and try again.",
+    retry: "Try again",
+    adminOverview: "Admin overview",
+    you: "You",
   },
   ta: {
     map: "வரைபடம்",
@@ -280,7 +329,10 @@ const COPY = {
 export type CopyKey = keyof typeof COPY.en;
 
 export function t(lang: string, key: CopyKey): string {
-  if (lang === "ta" || lang === "hi" || lang === "en") return COPY[lang][key];
+  if (lang === "ta" || lang === "hi") {
+    const local = (COPY[lang] as Partial<Record<CopyKey, string>>)[key];
+    if (local) return local;
+  }
   return COPY.en[key];
 }
 
